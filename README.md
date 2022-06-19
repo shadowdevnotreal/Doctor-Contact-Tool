@@ -1,3 +1,5 @@
+NOTE: I am not a good dev and did not create a requirements text or package this properly......but will eventually.
+
 # Doctor-Web-Contact-Tool
 ## To expedite your hunt for an Doctor
 ### Looking up Doctors is daunting. Then you have to find their contact buttons to send them an email.
