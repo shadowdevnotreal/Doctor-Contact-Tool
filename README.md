@@ -1,9 +1,11 @@
 NOTE: I am not a good dev and did not create a requirements text or package this properly......but will eventually.
 
-# Doctor-Web-Contact-Tool
-## To expedite your hunt for an Doctor
+# Doctor-Web-Contact-Tool #
+## To expedite your hunt for an Doctor ##
 ### Looking up Doctors is daunting. Then you have to find their contact buttons to send them an email.
 Hopefully this will cut down on your search and send time.
+
+<a href="https://www.buymeacoffee.com/notarealdev" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 40px !important;width: 145px !important;" ></a>
 
 The code got a MAJOR facelift this weekend and looks "prettier". The entire program will be getting a huge facelift as well after seeing a comment in another post. Here is the new look, I need to upload the code to git. I can't figure out how to center the ascii art, I suck.
 
