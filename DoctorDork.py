@@ -114,6 +114,24 @@ class DoctorDork:
         "Medicare Physician Compare": "https://www.medicare.gov/care-compare/search?type=Physician&searchType=Physician&page=1&search={doctor_name}",
     }
 
+    # Publication search platforms
+    PUBLICATION_LOOKUP = {
+        "PubMed": "https://pubmed.ncbi.nlm.nih.gov/?term={doctor_name}",
+        "Google Scholar": "https://scholar.google.com/scholar?q={doctor_name}",
+    }
+
+    # Specialty board certification platforms
+    SPECIALTY_VERIFICATION = {
+        "ABMS Certification": "https://www.certificationmatters.org/find-your-doctor.aspx",
+        "AOA Board Certification": "https://www.osteopathic.org/home/",
+    }
+
+    # Education and training platforms
+    EDUCATION_LOOKUP = {
+        "AMA DoctorFinder": "https://www.ama-assn.org/life-career/professional-satisfaction/ama-doctorfinder",
+        "Doximity": "https://www.doximity.com/search?q={doctor_name}",
+    }
+
     def __init__(self):
         """Initialize DoctorDork application"""
         self.config = self.load_config()
@@ -497,6 +515,137 @@ class DoctorDork:
 
         input(f"\n{Colors.CYAN}Press Enter to continue...{Colors.RESET}")
 
+    def publication_search(self, doctor_info: Optional[Dict] = None):
+        """Search for doctor's publications and research"""
+        self.clear_screen()
+        self.print_logo()
+        print(f"\n{Colors.BOLD}{Colors.GREEN}=== PUBLICATION SEARCH ==={Colors.RESET}\n")
+
+        if not doctor_info:
+            doctor_info = self.get_doctor_info()
+
+        doctor_name = doctor_info["doctor_name"]
+
+        print(f"\n{Colors.CYAN}Searching publications for: {doctor_name}{Colors.RESET}\n")
+
+        urls = []
+        for platform, url_template in self.PUBLICATION_LOOKUP.items():
+            url = url_template.format(
+                doctor_name=urllib.parse.quote(doctor_name)
+            )
+            urls.append((platform, url))
+            print(f"{Colors.YELLOW}{platform:<20}{Colors.RESET} {url}")
+
+        self.search_results["publication_search"] = urls
+
+        print(f"\n{Colors.INFO}ℹ Publication databases show:{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Research papers and studies{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Citations and impact metrics{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Areas of medical expertise{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Academic contributions{Colors.RESET}")
+
+        if self.config.get("auto_open_browser", True):
+            open_choice = input(f"\n{Colors.WHITE}Open publication databases? (y/n): {Colors.RESET}").strip().lower()
+            if open_choice == 'y':
+                for platform, url in urls:
+                    try:
+                        webbrowser.open(url)
+                        self.print_success(f"Opened {platform}")
+                    except Exception as e:
+                        self.print_error(f"Could not open {platform}: {e}")
+
+        self.save_history({"type": "publication_search", **doctor_info, "urls": dict(urls)})
+
+        input(f"\n{Colors.CYAN}Press Enter to continue...{Colors.RESET}")
+
+    def specialty_verification(self, doctor_info: Optional[Dict] = None):
+        """Verify board certifications and specialties"""
+        self.clear_screen()
+        self.print_logo()
+        print(f"\n{Colors.BOLD}{Colors.GREEN}=== SPECIALTY BOARD VERIFICATION ==={Colors.RESET}\n")
+
+        if not doctor_info:
+            doctor_info = self.get_doctor_info()
+
+        doctor_name = doctor_info["doctor_name"]
+        specialty = doctor_info.get("specialty", "")
+
+        print(f"\n{Colors.CYAN}Verifying board certifications for: {doctor_name}{Colors.RESET}\n")
+
+        urls = []
+        for platform, url_template in self.SPECIALTY_VERIFICATION.items():
+            url = url_template
+            urls.append((platform, url))
+            print(f"{Colors.YELLOW}{platform:<30}{Colors.RESET} {url}")
+
+        self.search_results["specialty_verification"] = urls
+
+        print(f"\n{Colors.INFO}ℹ Board certification databases show:{Colors.RESET}")
+        print(f"  • {Colors.WHITE}ABMS board certifications (24+ specialties){Colors.RESET}")
+        print(f"  • {Colors.WHITE}AOA osteopathic certifications{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Certification status and expiration{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Subspecialty certifications{Colors.RESET}")
+
+        if specialty:
+            print(f"\n{Colors.CYAN}Note: Searching for specialty: {specialty}{Colors.RESET}")
+
+        if self.config.get("auto_open_browser", True):
+            open_choice = input(f"\n{Colors.WHITE}Open certification databases? (y/n): {Colors.RESET}").strip().lower()
+            if open_choice == 'y':
+                for platform, url in urls:
+                    try:
+                        webbrowser.open(url)
+                        self.print_success(f"Opened {platform}")
+                    except Exception as e:
+                        self.print_error(f"Could not open {platform}: {e}")
+
+        self.save_history({"type": "specialty_verification", **doctor_info, "urls": dict(urls)})
+
+        input(f"\n{Colors.CYAN}Press Enter to continue...{Colors.RESET}")
+
+    def education_training_lookup(self, doctor_info: Optional[Dict] = None):
+        """Look up education and training background"""
+        self.clear_screen()
+        self.print_logo()
+        print(f"\n{Colors.BOLD}{Colors.GREEN}=== EDUCATION & TRAINING LOOKUP ==={Colors.RESET}\n")
+
+        if not doctor_info:
+            doctor_info = self.get_doctor_info()
+
+        doctor_name = doctor_info["doctor_name"]
+
+        print(f"\n{Colors.CYAN}Looking up education & training for: {doctor_name}{Colors.RESET}\n")
+
+        urls = []
+        for platform, url_template in self.EDUCATION_LOOKUP.items():
+            url = url_template.format(
+                doctor_name=urllib.parse.quote(doctor_name)
+            )
+            urls.append((platform, url))
+            print(f"{Colors.YELLOW}{platform:<20}{Colors.RESET} {url}")
+
+        self.search_results["education_lookup"] = urls
+
+        print(f"\n{Colors.INFO}ℹ Education databases show:{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Medical school attended{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Residency and fellowship training{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Year of graduation{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Professional credentials{Colors.RESET}")
+
+        if self.config.get("auto_open_browser", True):
+            open_choice = input(f"\n{Colors.WHITE}Open education databases? (y/n): {Colors.RESET}").strip().lower()
+            if open_choice == 'y':
+                for platform, url in urls:
+                    try:
+                        webbrowser.open(url)
+                        self.print_success(f"Opened {platform}")
+                    except Exception as e:
+                        self.print_error(f"Could not open {platform}: {e}")
+
+        self.save_history({"type": "education_lookup", **doctor_info, "urls": dict(urls)})
+
+        input(f"\n{Colors.CYAN}Press Enter to continue...{Colors.RESET}")
+
     def comprehensive_search(self):
         """Run all search features at once"""
         self.clear_screen()
@@ -512,22 +661,31 @@ class DoctorDork:
         self.config["auto_open_browser"] = False
 
         # Run all searches
-        self.print_info("1/6 - Running contact search...")
+        self.print_info("1/9 - Running contact search...")
         self.contact_search(doctor_info)
 
-        self.print_info("2/6 - Looking up medical board...")
+        self.print_info("2/9 - Looking up medical board...")
         self.medical_board_lookup(doctor_info)
 
-        self.print_info("3/6 - Checking Medicare participation...")
+        self.print_info("3/9 - Checking Medicare participation...")
         self.medicare_participation_lookup(doctor_info)
 
-        self.print_info("4/6 - Aggregating reviews...")
+        self.print_info("4/9 - Searching publications...")
+        self.publication_search(doctor_info)
+
+        self.print_info("5/9 - Verifying specialty certifications...")
+        self.specialty_verification(doctor_info)
+
+        self.print_info("6/9 - Looking up education & training...")
+        self.education_training_lookup(doctor_info)
+
+        self.print_info("7/9 - Aggregating reviews...")
         self.review_aggregation(doctor_info)
 
-        self.print_info("5/6 - Searching social media...")
+        self.print_info("8/9 - Searching social media...")
         self.social_media_search(doctor_info)
 
-        self.print_info("6/6 - Complete!")
+        self.print_info("9/9 - Complete!")
 
         # Restore original setting
         self.config["auto_open_browser"] = original_setting
