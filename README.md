@@ -107,7 +107,7 @@ python3 DoctorDork.py
 ║  | |_| | (_) | (__| || (_) | |  | |_| | (_) | |  |   <                ║
 ║  |____/ \___/ \___|\__\___/|_|  |____/ \___/|_|  |_|\_\               ║
 ║                                                                       ║
-║              Medical Professional Research Tool v2.1.0            ║
+║              Medical Professional Research Tool v2.1.0                ║
 ║                                                                       ║
 ║          Streamline your doctor research from 30+ to 2 minutes        ║
 ║                                                                       ║
