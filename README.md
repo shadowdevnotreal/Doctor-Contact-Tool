@@ -623,6 +623,19 @@ Open an issue on [GitHub Issues](https://github.com/shadowdevnotreal/Doctor-Cont
 </details>
 
 <details>
+<summary><b>What if a medical board URL is broken or doesn't work?</b></summary>
+
+Medical board websites occasionally change their URLs or undergo maintenance. If you encounter a broken link:
+
+1. **Report it**: Open an issue on [GitHub Issues](https://github.com/shadowdevnotreal/Doctor-Contact-Tool/issues) with the state and error
+2. **Temporary workaround**: Search for "[State Name] medical board license verification" to find the current URL
+3. **Note**: Some sites may show errors in automated tests but work fine when opened in a browser
+
+We periodically update URLs to keep them current.
+
+</details>
+
+<details>
 <summary><b>Is my search history private?</b></summary>
 
 Yes! Everything is stored locally in `~/.doctordork_history.json`. No data is sent anywhere.
