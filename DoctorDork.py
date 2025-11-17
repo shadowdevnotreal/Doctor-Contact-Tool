@@ -2,8 +2,12 @@
 """
 DoctorDork - Medical Professional Research Tool
 Author: Slow
-Version: 2.0.0
+Version: 2.1.0
 Description: Comprehensive tool for researching doctors and medical professionals
+
+NOTE: Medical board URLs may occasionally change or be temporarily unavailable.
+If you encounter a broken link, please report it at:
+https://github.com/shadowdevnotreal/Doctor-Contact-Tool/issues
 """
 
 import os
