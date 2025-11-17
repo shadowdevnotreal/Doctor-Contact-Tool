@@ -240,13 +240,13 @@ python3 DoctorDork.py
 ├──────────────────────────────────────────────────────┤
 │  📂 Organized Categories:                            │
 │  ├─ 📞 Contact Search (Healthgrades, Vitals, ZocDoc) │
-│  ├─ ⚖️  Medical Board (State License Verification)  │
+│  ├─ ⚖️  Medical Board (State License Verification)   │
 │  ├─ 💊 Medicare Participation (CMS, NPI Registry)    │
 │  ├─ 📚 Publications (PubMed, Google Scholar)         │
 │  ├─ 🎓 Education & Training (AMA, Doximity)          │
 │  ├─ 🏥 Hospital Affiliations (3 platforms)           │
 │  ├─ 💳 Insurance Acceptance (3 platforms)            │
-│  ├─ 🗣️  Language Support (3 platforms)              │
+│  ├─ 🗣️  Language Support (3 platforms)               │
 │  ├─ 💻 Telemedicine Options (4 platforms)            │
 │  ├─ 📅 Appointment Booking (Zocdoc, MyChart, etc)    │
 │  ├─ ⭐ Reviews (Healthgrades, Vitals, RateMDs, etc)  │
