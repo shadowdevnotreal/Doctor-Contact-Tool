@@ -39,8 +39,13 @@ env/
 doctordork_results_*.csv
 doctordork_results_*.json
 doctordork_results_*.html
+doctordork_report_*.html
 doctordork_batch_*.csv
 doctordork_batch_*.json
 
 # Development tools
 check_menu_alignment.py
+generate_report.py
+test_actual_logo.py
+test_search.py
+verify_alignment.py
