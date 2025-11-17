@@ -108,6 +108,12 @@ class DoctorDork:
         "Facebook": "https://www.facebook.com/search/top?q={doctor_name}+doctor",
     }
 
+    # Medicare/Provider lookup platforms
+    MEDICARE_LOOKUP = {
+        "NPI Registry": "https://npiregistry.cms.hhs.gov/search?searchType=ind&lastName={last_name}&firstName={first_name}&state={state}",
+        "Medicare Physician Compare": "https://www.medicare.gov/care-compare/search?type=Physician&searchType=Physician&page=1&search={doctor_name}",
+    }
+
     def __init__(self):
         """Initialize DoctorDork application"""
         self.config = self.load_config()
@@ -439,6 +445,58 @@ class DoctorDork:
 
         input(f"\n{Colors.CYAN}Press Enter to continue...{Colors.RESET}")
 
+    def medicare_participation_lookup(self, doctor_info: Optional[Dict] = None):
+        """Look up Medicare participation and NPI information"""
+        self.clear_screen()
+        self.print_logo()
+        print(f"\n{Colors.BOLD}{Colors.GREEN}=== MEDICARE PARTICIPATION LOOKUP ==={Colors.RESET}\n")
+
+        if not doctor_info:
+            doctor_info = self.get_doctor_info()
+
+        doctor_name = doctor_info["doctor_name"]
+        state = doctor_info.get("state", "")
+
+        # Parse name into first and last for NPI Registry
+        name_parts = doctor_name.replace("Dr.", "").replace("Dr", "").strip().split()
+        first_name = name_parts[0] if len(name_parts) > 0 else ""
+        last_name = name_parts[-1] if len(name_parts) > 1 else name_parts[0] if len(name_parts) > 0 else ""
+
+        print(f"\n{Colors.CYAN}Checking Medicare participation for: {doctor_name}{Colors.RESET}\n")
+
+        urls = []
+        for platform, url_template in self.MEDICARE_LOOKUP.items():
+            url = url_template.format(
+                doctor_name=urllib.parse.quote(doctor_name),
+                first_name=urllib.parse.quote(first_name),
+                last_name=urllib.parse.quote(last_name),
+                state=urllib.parse.quote(state)
+            )
+            urls.append((platform, url))
+            print(f"{Colors.YELLOW}{platform:<30}{Colors.RESET} {url}")
+
+        self.search_results["medicare_lookup"] = urls
+
+        print(f"\n{Colors.INFO}ℹ These databases show:{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Medicare enrollment status{Colors.RESET}")
+        print(f"  • {Colors.WHITE}National Provider Identifier (NPI){Colors.RESET}")
+        print(f"  • {Colors.WHITE}Practice locations and credentials{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Medicare patient ratings{Colors.RESET}")
+
+        if self.config.get("auto_open_browser", True):
+            open_choice = input(f"\n{Colors.WHITE}Open Medicare lookup sites? (y/n): {Colors.RESET}").strip().lower()
+            if open_choice == 'y':
+                for platform, url in urls:
+                    try:
+                        webbrowser.open(url)
+                        self.print_success(f"Opened {platform}")
+                    except Exception as e:
+                        self.print_error(f"Could not open {platform}: {e}")
+
+        self.save_history({"type": "medicare_lookup", **doctor_info, "urls": dict(urls)})
+
+        input(f"\n{Colors.CYAN}Press Enter to continue...{Colors.RESET}")
+
     def comprehensive_search(self):
         """Run all search features at once"""
         self.clear_screen()
@@ -454,19 +512,22 @@ class DoctorDork:
         self.config["auto_open_browser"] = False
 
         # Run all searches
-        self.print_info("1/5 - Running contact search...")
+        self.print_info("1/6 - Running contact search...")
         self.contact_search(doctor_info)
 
-        self.print_info("2/5 - Looking up medical board...")
+        self.print_info("2/6 - Looking up medical board...")
         self.medical_board_lookup(doctor_info)
 
-        self.print_info("3/5 - Aggregating reviews...")
+        self.print_info("3/6 - Checking Medicare participation...")
+        self.medicare_participation_lookup(doctor_info)
+
+        self.print_info("4/6 - Aggregating reviews...")
         self.review_aggregation(doctor_info)
 
-        self.print_info("4/5 - Searching social media...")
+        self.print_info("5/6 - Searching social media...")
         self.social_media_search(doctor_info)
 
-        self.print_info("5/5 - Complete!")
+        self.print_info("6/6 - Complete!")
 
         # Restore original setting
         self.config["auto_open_browser"] = original_setting

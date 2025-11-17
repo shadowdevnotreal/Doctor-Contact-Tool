@@ -50,7 +50,7 @@
 </tr>
 </table>
 
-**DoctorDork** is a comprehensive Python-based CLI tool that streamlines medical professional research by integrating **51 medical boards**, **5 review platforms**, and **3 social networks** into one powerful interface.
+**DoctorDork** is a comprehensive Python-based CLI tool that streamlines medical professional research by integrating **51 medical boards**, **2 Medicare databases**, **5 review platforms**, and **3 social networks** into one powerful interface.
 
 ---
 
@@ -67,7 +67,7 @@ Research doctors in **~2 minutes** instead of 30+
 <td align="center" width="25%">
 
 ### 🌐 Comprehensive
-**51** medical boards + **5** review sites + **3** social platforms
+**51** medical boards + **2** Medicare DBs + **5** review sites + **3** social platforms
 
 </td>
 <td align="center" width="25%">
@@ -155,6 +155,7 @@ python3 DoctorDork.py
 |---------|-------------|----------|
 | 🔍 **Contact Search** | Find doctors with contact forms via optimized Google dorks | Unlimited |
 | ⚖️ **License Verification** | Direct links to medical board verification portals | 51 Jurisdictions |
+| 🏥 **Medicare Lookup** | Check Medicare participation and NPI Registry information | 2 Databases |
 | ⭐ **Review Aggregation** | Search multiple review platforms simultaneously | 5 Platforms |
 | 📋 **Ethics Reporting** | File complaints with state medical boards | 51 Boards |
 | 📱 **Social Media** | Locate professional profiles across networks | 3 Networks |
@@ -408,9 +409,10 @@ DoctorDork works everywhere Python does:
 
 ### 📊 Data Coverage
 - **Medical Boards**: 51 US jurisdictions
+- **Medicare Databases**: 2 (NPI Registry + Physician Compare)
 - **Review Platforms**: 5 major services
 - **Social Networks**: 3 major platforms
-- **Total Integrations**: 59+ endpoints
+- **Total Integrations**: 61+ endpoints
 
 ### 🏗️ Architecture
 ```
@@ -418,6 +420,7 @@ DoctorDork (Class)
 ├── Configuration Management
 ├── Search History Tracking
 ├── Medical Board Database (51)
+├── Medicare Lookup Integration (2)
 ├── Review Platform Integration (5)
 ├── Social Media Integration (3)
 ├── Export Engine (CSV/JSON/HTML)
@@ -650,6 +653,9 @@ We welcome contributions! Here's how:
 
 ## 🗺️ Roadmap
 
+### ✅ Recently Added (v2.0.0)
+- [x] **Medicare Participation** - ⭐ Check Medicare provider enrollment via NPI Registry and Medicare Physician Compare
+
 ### Version 2.1 (Q2 2025)
 - [ ] **Insurance Acceptance Lookup** - Check which insurance plans doctors accept
 - [ ] **Hospital Affiliations** - View which hospitals doctors are affiliated with
@@ -662,7 +668,6 @@ We welcome contributions! Here's how:
 
 ### Version 2.2 (Q4 2025)
 - [ ] **Malpractice Database Integration** - Search malpractice lawsuit records
-- [ ] **Medicare Participation** - Check Medicare provider enrollment
 - [ ] **Medicaid Participation** - Verify Medicaid provider status
 - [ ] **Patient Volume Statistics** - View patient load and wait times
 - [ ] **Cost Transparency** - Compare procedure costs across doctors
@@ -728,12 +733,13 @@ Your support helps maintain and improve DoctorDork! 🙏
 |--------|-------|
 | **Research Time Saved** | 30+ min → ~2 min (93%) |
 | **Medical Boards** | 51 jurisdictions |
+| **Medicare Databases** | 2 (NPI Registry + Physician Compare) |
 | **Review Platforms** | 5 major services |
 | **Social Networks** | 3 platforms |
-| **Total Integrations** | 59+ endpoints |
+| **Total Integrations** | 61+ endpoints |
 | **Export Formats** | 3 (CSV, JSON, HTML) |
 | **Dependencies** | 0 (stdlib only) |
-| **Lines of Code** | ~950 |
+| **Lines of Code** | ~1000 |
 | **Python Version** | 3.7+ |
 | **License** | GPL-3.0 |
 | **Cost** | $0 (Forever Free) |
