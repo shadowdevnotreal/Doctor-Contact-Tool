@@ -212,15 +212,15 @@ class DoctorDork:
 {Colors.YELLOW}╔════════════════════════════════════════════════════════════════╗
 ║                         MAIN MENU                              ║
 ╠════════════════════════════════════════════════════════════════╣
-║  1. Doctor Contact Search    - Find doctors with contact forms║
-║  2. Medical Board Lookup     - Verify licenses (51 states)    ║
-║  3. Review Aggregation       - Search 5 review platforms      ║
-║  4. Ethics Violation Report  - File medical board complaints  ║
-║  5. Social Media Search      - Find professional profiles     ║
-║  6. Comprehensive Search     - All features in one operation  ║
-║  7. Batch Processing         - Process multiple queries       ║
-║  8. Settings                 - Configure preferences          ║
-║  9. Exit                     - Close application              ║
+║  1. Doctor Contact Search    - Find doctors with contact forms ║
+║  2. Medical Board Lookup     - Verify licenses (51 states)     ║
+║  3. Review Aggregation       - Search 5 review platforms       ║
+║  4. Ethics Violation Report  - File medical board complaints   ║
+║  5. Social Media Search      - Find professional profiles      ║
+║  6. Comprehensive Search     - All features in one operation   ║
+║  7. Batch Processing         - Process multiple queries        ║
+║  8. Settings                 - Configure preferences           ║
+║  9. Exit                     - Close application               ║
 ╚════════════════════════════════════════════════════════════════╝{Colors.RESET}
 """
         print(menu)
