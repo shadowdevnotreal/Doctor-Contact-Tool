@@ -1,0 +1,29 @@
+# DoctorDork - Medical Professional Research Tool
+# Requirements file
+
+# NOTE: DoctorDork uses ONLY Python standard library modules.
+# No external dependencies are required for the core functionality.
+
+# The following modules are used (all part of Python stdlib):
+# - os (operating system interface)
+# - sys (system-specific parameters)
+# - json (JSON encoder/decoder)
+# - csv (CSV file reading/writing)
+# - webbrowser (web browser controller)
+# - urllib.parse (URL parsing)
+# - datetime (date and time handling)
+# - pathlib (object-oriented filesystem paths)
+# - typing (type hints)
+
+# Minimum Python version: 3.7+
+# python_requires='>=3.7'
+
+# Optional dependencies (not required for core functionality):
+# If you want colored output on Windows without ANSI support:
+# colorama>=0.4.4
+
+# For development/testing (not required for normal use):
+# pytest>=7.0.0
+# black>=22.0.0
+# flake8>=4.0.0
+# mypy>=0.950
