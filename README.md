@@ -227,30 +227,30 @@ python3 DoctorDork.py
 **What You'll See:**
 ```
 ┌──────────────────────────────────────────────────────┐
-│  🩺 DoctorDork Search Results                         │
+│  🩺 DoctorDork Search Results                        │
 │  Comprehensive Medical Professional Research Report  │
 ├──────────────────────────────────────────────────────┤
-│  📋 Doctor Info Cards                                 │
+│  📋 Doctor Info Cards                                │
 │  ├─ Name │ City │ State │ Specialty │ Generated      │
 ├──────────────────────────────────────────────────────┤
-│  📊 Statistics Dashboard                              │
+│  📊 Statistics Dashboard                             │
 │  ├─ 13 Search Categories                             │
 │  ├─ 38+ Total Resources                              │
 │  └─ 51 Medical Boards                                │
 ├──────────────────────────────────────────────────────┤
-│  📂 Organized Categories:                             │
-│  ├─ 📞 Contact Search (Healthgrades, Vitals, ZocDoc)  │
-│  ├─ ⚖️  Medical Board (State License Verification)   │
-│  ├─ 💊 Medicare Participation (CMS, NPI Registry)     │
-│  ├─ 📚 Publications (PubMed, Google Scholar)          │
-│  ├─ 🎓 Education & Training (AMA, Doximity)           │
-│  ├─ 🏥 Hospital Affiliations (3 platforms)            │
-│  ├─ 💳 Insurance Acceptance (3 platforms)             │
-│  ├─ 🗣️  Language Support (3 platforms)               │
-│  ├─ 💻 Telemedicine Options (4 platforms)             │
-│  ├─ 📅 Appointment Booking (Zocdoc, MyChart, etc)     │
-│  ├─ ⭐ Reviews (Healthgrades, Vitals, RateMDs, etc)   │
-│  └─ 📱 Social Media (LinkedIn, Twitter, Facebook)     │
+│  📂 Organized Categories:                            │
+│  ├─ 📞 Contact Search (Healthgrades, Vitals, ZocDoc) │
+│  ├─ ⚖️  Medical Board (State License Verification)  │
+│  ├─ 💊 Medicare Participation (CMS, NPI Registry)    │
+│  ├─ 📚 Publications (PubMed, Google Scholar)         │
+│  ├─ 🎓 Education & Training (AMA, Doximity)          │
+│  ├─ 🏥 Hospital Affiliations (3 platforms)           │
+│  ├─ 💳 Insurance Acceptance (3 platforms)            │
+│  ├─ 🗣️  Language Support (3 platforms)              │
+│  ├─ 💻 Telemedicine Options (4 platforms)            │
+│  ├─ 📅 Appointment Booking (Zocdoc, MyChart, etc)    │
+│  ├─ ⭐ Reviews (Healthgrades, Vitals, RateMDs, etc)  │
+│  └─ 📱 Social Media (LinkedIn, Twitter, Facebook)    │
 └──────────────────────────────────────────────────────┘
   Each link is clickable and opens in a new tab!
 ```
