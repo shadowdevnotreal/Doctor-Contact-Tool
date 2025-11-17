@@ -56,3 +56,4 @@ test_fixed_preview.py
 test_search.py
 verify_alignment.py
 verify_final_preview.py
+wcwidth_check.py
