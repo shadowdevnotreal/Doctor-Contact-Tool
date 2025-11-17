@@ -49,6 +49,7 @@ check_menu_alignment.py
 check_preview_alignment.py
 detailed_bash_check.py
 generate_report.py
+recheck_readme_preview.py
 test_actual_logo.py
 test_bash_menu.sh
 test_fixed_preview.py
