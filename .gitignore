@@ -41,3 +41,6 @@ doctordork_results_*.json
 doctordork_results_*.html
 doctordork_batch_*.csv
 doctordork_batch_*.json
+
+# Development tools
+check_menu_alignment.py
