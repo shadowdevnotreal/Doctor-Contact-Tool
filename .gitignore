@@ -45,7 +45,10 @@ doctordork_batch_*.json
 
 # Development tools
 check_menu_alignment.py
+check_preview_alignment.py
 generate_report.py
 test_actual_logo.py
+test_fixed_preview.py
 test_search.py
 verify_alignment.py
+verify_final_preview.py
