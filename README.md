@@ -8,8 +8,8 @@
 ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)
 ![Dependencies](https://img.shields.io/badge/dependencies-zero-green.svg)
 ![License](https://img.shields.io/badge/license-GPL--3.0-orange.svg)
-![Version](https://img.shields.io/badge/version-2.0.0-brightgreen.svg)
-![Lines of Code](https://img.shields.io/badge/lines-950-blue.svg)
+![Version](https://img.shields.io/badge/version-2.1.0-brightgreen.svg)
+![Lines of Code](https://img.shields.io/badge/lines-1450-blue.svg)
 
 <a href="https://www.buymeacoffee.com/diatasso" target="_blank">
   <img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" height="40">
@@ -50,7 +50,7 @@
 </tr>
 </table>
 
-**DoctorDork** is a comprehensive Python-based CLI tool that streamlines medical professional research by integrating **51 medical boards**, **5 review platforms**, and **3 social networks** into one powerful interface.
+**DoctorDork** is a comprehensive Python-based CLI tool that streamlines medical professional research by integrating **51 medical boards**, **2 Medicare databases**, **2 publication databases**, **2 certification boards**, **2 education databases**, **3 hospital affiliation platforms**, **3 insurance acceptance databases**, **3 language support platforms**, **4 telemedicine platforms**, **4 appointment booking systems**, **5 review platforms**, and **3 social networks** into one powerful interface.
 
 ---
 
@@ -67,7 +67,7 @@ Research doctors in **~2 minutes** instead of 30+
 <td align="center" width="25%">
 
 ### 🌐 Comprehensive
-**51** medical boards + **5** review sites + **3** social platforms
+**51** medical boards + **27** databases + **5** review sites + **3** social platforms
 
 </td>
 <td align="center" width="25%">
@@ -107,7 +107,7 @@ python3 DoctorDork.py
 ║  | |_| | (_) | (__| || (_) | |  | |_| | (_) | |  |   <                ║
 ║  |____/ \___/ \___|\__\___/|_|  |____/ \___/|_|  |_|\_\               ║
 ║                                                                       ║
-║              Medical Professional Research Tool v2.0.0                ║
+║              Medical Professional Research Tool v2.1.0            ║
 ║                                                                       ║
 ║          Streamline your doctor research from 30+ to 2 minutes        ║
 ║                                                                       ║
@@ -155,6 +155,15 @@ python3 DoctorDork.py
 |---------|-------------|----------|
 | 🔍 **Contact Search** | Find doctors with contact forms via optimized Google dorks | Unlimited |
 | ⚖️ **License Verification** | Direct links to medical board verification portals | 51 Jurisdictions |
+| 🏥 **Medicare Lookup** | Check Medicare participation and NPI Registry information | 2 Databases |
+| 📚 **Publication Search** | Find research papers and publications via PubMed & Google Scholar | 2 Databases |
+| 🎓 **Specialty Verification** | Verify board certifications through ABMS and AOA | 2 Boards |
+| 🏫 **Education & Training** | Look up medical school, residency, and fellowship information | 2 Databases |
+| 🏥 **Hospital Affiliations** | Find hospital affiliations and admitting privileges | 3 Platforms |
+| 💳 **Insurance Acceptance** | Check which insurance plans doctors accept | 3 Databases |
+| 🌍 **Language Support** | Find doctors by languages spoken | 3 Platforms |
+| 📹 **Telemedicine Options** | Identify doctors offering virtual visits | 4 Platforms |
+| 📅 **Appointment Booking** | Access online scheduling and booking links | 4 Systems |
 | ⭐ **Review Aggregation** | Search multiple review platforms simultaneously | 5 Platforms |
 | 📋 **Ethics Reporting** | File complaints with state medical boards | 51 Boards |
 | 📱 **Social Media** | Locate professional profiles across networks | 3 Networks |
@@ -402,15 +411,24 @@ DoctorDork works everywhere Python does:
 ### 📦 Package Info
 - **Language**: Pure Python 3.7+
 - **Dependencies**: Zero (stdlib only)
-- **Size**: ~950 lines of code
+- **Size**: ~1450 lines of code
 - **Architecture**: Object-oriented design
 - **Configuration**: JSON-based persistence
 
 ### 📊 Data Coverage
 - **Medical Boards**: 51 US jurisdictions
+- **Medicare Databases**: 2 (NPI Registry + Physician Compare)
+- **Publication Databases**: 2 (PubMed + Google Scholar)
+- **Certification Boards**: 2 (ABMS + AOA)
+- **Education Databases**: 2 (AMA DoctorFinder + Doximity)
+- **Hospital Affiliations**: 3 platforms (Healthgrades + Vitals + WebMD)
+- **Insurance Acceptance**: 3 databases (Zocdoc + Healthgrades + Vitals)
+- **Language Support**: 3 platforms (Healthgrades + Vitals + Zocdoc)
+- **Telemedicine Platforms**: 4 services (Healthgrades + Zocdoc + Doximity + Teladoc)
+- **Appointment Booking**: 4 systems (Zocdoc + Healthgrades + Vitals + MyChart)
 - **Review Platforms**: 5 major services
 - **Social Networks**: 3 major platforms
-- **Total Integrations**: 59+ endpoints
+- **Total Integrations**: 86+ endpoints
 
 ### 🏗️ Architecture
 ```
@@ -418,6 +436,15 @@ DoctorDork (Class)
 ├── Configuration Management
 ├── Search History Tracking
 ├── Medical Board Database (51)
+├── Medicare Lookup Integration (2)
+├── Publication Search Integration (2)
+├── Specialty Verification Integration (2)
+├── Education & Training Integration (2)
+├── Hospital Affiliations Integration (3)
+├── Insurance Acceptance Integration (3)
+├── Language Support Integration (3)
+├── Telemedicine Options Integration (4)
+├── Appointment Booking Integration (4)
 ├── Review Platform Integration (5)
 ├── Social Media Integration (3)
 ├── Export Engine (CSV/JSON/HTML)
@@ -650,19 +677,19 @@ We welcome contributions! Here's how:
 
 ## 🗺️ Roadmap
 
-### Version 2.1 (Q2 2025)
-- [ ] **Insurance Acceptance Lookup** - Check which insurance plans doctors accept
-- [ ] **Hospital Affiliations** - View which hospitals doctors are affiliated with
-- [ ] **Education & Training** - Verify medical school and residency information
-- [ ] **Publication Search** - Find research papers and publications by doctors
-- [ ] **Appointment Availability** - Check doctor availability and booking links
-- [ ] **Specialty Verification** - Confirm board certifications and specialties
-- [ ] **Language Support** - Filter by languages spoken
-- [ ] **Telemedicine Options** - Identify doctors offering virtual visits
+### ✅ Recently Added (v2.1.0)
+- [x] **Hospital Affiliations** - ⭐ View hospital affiliations and admitting privileges via 3 platforms
+- [x] **Insurance Acceptance** - ⭐ Check which insurance plans doctors accept via 3 databases
+- [x] **Language Support** - ⭐ Find doctors by languages spoken via 3 platforms
+- [x] **Telemedicine Options** - ⭐ Identify doctors offering virtual visits via 4 platforms
+- [x] **Appointment Booking Links** - ⭐ Access online scheduling via 4 booking systems
+- [x] **Medicare Participation** - Check Medicare provider enrollment via NPI Registry and Medicare Physician Compare
+- [x] **Publication Search** - Find research papers and publications via PubMed and Google Scholar
+- [x] **Specialty Verification** - Confirm board certifications through ABMS and AOA
+- [x] **Education & Training** - Verify medical school and residency via AMA DoctorFinder and Doximity
 
 ### Version 2.2 (Q4 2025)
 - [ ] **Malpractice Database Integration** - Search malpractice lawsuit records
-- [ ] **Medicare Participation** - Check Medicare provider enrollment
 - [ ] **Medicaid Participation** - Verify Medicaid provider status
 - [ ] **Patient Volume Statistics** - View patient load and wait times
 - [ ] **Cost Transparency** - Compare procedure costs across doctors
@@ -728,12 +755,21 @@ Your support helps maintain and improve DoctorDork! 🙏
 |--------|-------|
 | **Research Time Saved** | 30+ min → ~2 min (93%) |
 | **Medical Boards** | 51 jurisdictions |
+| **Medicare Databases** | 2 (NPI Registry + Physician Compare) |
+| **Publication Databases** | 2 (PubMed + Google Scholar) |
+| **Certification Boards** | 2 (ABMS + AOA) |
+| **Education Databases** | 2 (AMA DoctorFinder + Doximity) |
+| **Hospital Affiliations** | 3 platforms (Healthgrades + Vitals + WebMD) |
+| **Insurance Acceptance** | 3 databases (Zocdoc + Healthgrades + Vitals) |
+| **Language Support** | 3 platforms (Healthgrades + Vitals + Zocdoc) |
+| **Telemedicine Platforms** | 4 services (Healthgrades + Zocdoc + Doximity + Teladoc) |
+| **Appointment Booking** | 4 systems (Zocdoc + Healthgrades + Vitals + MyChart) |
 | **Review Platforms** | 5 major services |
 | **Social Networks** | 3 platforms |
-| **Total Integrations** | 59+ endpoints |
+| **Total Integrations** | 86+ endpoints |
 | **Export Formats** | 3 (CSV, JSON, HTML) |
 | **Dependencies** | 0 (stdlib only) |
-| **Lines of Code** | ~950 |
+| **Lines of Code** | ~1450 |
 | **Python Version** | 3.7+ |
 | **License** | GPL-3.0 |
 | **Cost** | $0 (Forever Free) |

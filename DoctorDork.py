@@ -33,7 +33,7 @@ class Colors:
 class DoctorDork:
     """Main application class for DoctorDork"""
 
-    VERSION = "2.0.0"
+    VERSION = "2.1.0"
     CONFIG_FILE = Path.home() / ".doctordork_config.json"
     HISTORY_FILE = Path.home() / ".doctordork_history.json"
 
@@ -106,6 +106,67 @@ class DoctorDork:
         "LinkedIn": "https://www.linkedin.com/search/results/all/?keywords={doctor_name}+{specialty}",
         "Twitter": "https://twitter.com/search?q={doctor_name}+doctor",
         "Facebook": "https://www.facebook.com/search/top?q={doctor_name}+doctor",
+    }
+
+    # Medicare/Provider lookup platforms
+    MEDICARE_LOOKUP = {
+        "NPI Registry": "https://npiregistry.cms.hhs.gov/search?searchType=ind&lastName={last_name}&firstName={first_name}&state={state}",
+        "Medicare Physician Compare": "https://www.medicare.gov/care-compare/search?type=Physician&searchType=Physician&page=1&search={doctor_name}",
+    }
+
+    # Publication search platforms
+    PUBLICATION_LOOKUP = {
+        "PubMed": "https://pubmed.ncbi.nlm.nih.gov/?term={doctor_name}",
+        "Google Scholar": "https://scholar.google.com/scholar?q={doctor_name}",
+    }
+
+    # Specialty board certification platforms
+    SPECIALTY_VERIFICATION = {
+        "ABMS Certification": "https://www.certificationmatters.org/find-your-doctor.aspx",
+        "AOA Board Certification": "https://www.osteopathic.org/home/",
+    }
+
+    # Education and training platforms
+    EDUCATION_LOOKUP = {
+        "AMA DoctorFinder": "https://www.ama-assn.org/life-career/professional-satisfaction/ama-doctorfinder",
+        "Doximity": "https://www.doximity.com/search?q={doctor_name}",
+    }
+
+    # Hospital affiliation platforms
+    HOSPITAL_AFFILIATIONS = {
+        "Healthgrades Hospital Affiliations": "https://www.healthgrades.com/search?what={doctor_name}&where={city}%2C+{state}",
+        "Vitals Hospital Info": "https://www.vitals.com/search?q={doctor_name}&locationsearch={city}%2C+{state}",
+        "WebMD Provider Directory": "https://doctor.webmd.com/results?ps={doctor_name}&pt=&lid={state}",
+    }
+
+    # Insurance acceptance platforms
+    INSURANCE_ACCEPTANCE = {
+        "Zocdoc Insurance Search": "https://www.zocdoc.com/search/?dr_specialty=&insurance_carrier=&search_query={doctor_name}&address={city}%2C+{state}",
+        "Healthgrades Insurance Info": "https://www.healthgrades.com/search?what={doctor_name}&where={city}%2C+{state}",
+        "Vitals Insurance Accepted": "https://www.vitals.com/search?q={doctor_name}&locationsearch={city}%2C+{state}",
+    }
+
+    # Language support lookup platforms
+    LANGUAGE_SUPPORT = {
+        "Healthgrades Languages": "https://www.healthgrades.com/search?what={doctor_name}&where={city}%2C+{state}",
+        "Vitals Language Info": "https://www.vitals.com/search?q={doctor_name}&locationsearch={city}%2C+{state}",
+        "Zocdoc Language Filter": "https://www.zocdoc.com/search/?search_query={doctor_name}&address={city}%2C+{state}",
+    }
+
+    # Telemedicine options platforms
+    TELEMEDICINE_OPTIONS = {
+        "Healthgrades Virtual Care": "https://www.healthgrades.com/search?what={doctor_name}+telehealth&where={city}%2C+{state}",
+        "Zocdoc Video Visits": "https://www.zocdoc.com/search/?dr_specialty=&insurance_carrier=&search_query={doctor_name}&address={city}%2C+{state}&visitType=virtual",
+        "Doximity Video": "https://www.doximity.com/search?q={doctor_name}",
+        "Teladoc Provider Search": "https://www.teladoc.com/",
+    }
+
+    # Appointment booking platforms
+    APPOINTMENT_BOOKING = {
+        "Zocdoc Booking": "https://www.zocdoc.com/search/?dr_specialty=&insurance_carrier=&search_query={doctor_name}&address={city}%2C+{state}",
+        "Healthgrades Appointments": "https://www.healthgrades.com/search?what={doctor_name}&where={city}%2C+{state}",
+        "Vitals Schedule": "https://www.vitals.com/search?q={doctor_name}&locationsearch={city}%2C+{state}",
+        "MyChart Epic": "https://www.mychartonline.com/",
     }
 
     def __init__(self):
@@ -439,6 +500,426 @@ class DoctorDork:
 
         input(f"\n{Colors.CYAN}Press Enter to continue...{Colors.RESET}")
 
+    def medicare_participation_lookup(self, doctor_info: Optional[Dict] = None):
+        """Look up Medicare participation and NPI information"""
+        self.clear_screen()
+        self.print_logo()
+        print(f"\n{Colors.BOLD}{Colors.GREEN}=== MEDICARE PARTICIPATION LOOKUP ==={Colors.RESET}\n")
+
+        if not doctor_info:
+            doctor_info = self.get_doctor_info()
+
+        doctor_name = doctor_info["doctor_name"]
+        state = doctor_info.get("state", "")
+
+        # Parse name into first and last for NPI Registry
+        name_parts = doctor_name.replace("Dr.", "").replace("Dr", "").strip().split()
+        first_name = name_parts[0] if len(name_parts) > 0 else ""
+        last_name = name_parts[-1] if len(name_parts) > 1 else name_parts[0] if len(name_parts) > 0 else ""
+
+        print(f"\n{Colors.CYAN}Checking Medicare participation for: {doctor_name}{Colors.RESET}\n")
+
+        urls = []
+        for platform, url_template in self.MEDICARE_LOOKUP.items():
+            url = url_template.format(
+                doctor_name=urllib.parse.quote(doctor_name),
+                first_name=urllib.parse.quote(first_name),
+                last_name=urllib.parse.quote(last_name),
+                state=urllib.parse.quote(state)
+            )
+            urls.append((platform, url))
+            print(f"{Colors.YELLOW}{platform:<30}{Colors.RESET} {url}")
+
+        self.search_results["medicare_lookup"] = urls
+
+        print(f"\n{Colors.INFO}ℹ These databases show:{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Medicare enrollment status{Colors.RESET}")
+        print(f"  • {Colors.WHITE}National Provider Identifier (NPI){Colors.RESET}")
+        print(f"  • {Colors.WHITE}Practice locations and credentials{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Medicare patient ratings{Colors.RESET}")
+
+        if self.config.get("auto_open_browser", True):
+            open_choice = input(f"\n{Colors.WHITE}Open Medicare lookup sites? (y/n): {Colors.RESET}").strip().lower()
+            if open_choice == 'y':
+                for platform, url in urls:
+                    try:
+                        webbrowser.open(url)
+                        self.print_success(f"Opened {platform}")
+                    except Exception as e:
+                        self.print_error(f"Could not open {platform}: {e}")
+
+        self.save_history({"type": "medicare_lookup", **doctor_info, "urls": dict(urls)})
+
+        input(f"\n{Colors.CYAN}Press Enter to continue...{Colors.RESET}")
+
+    def publication_search(self, doctor_info: Optional[Dict] = None):
+        """Search for doctor's publications and research"""
+        self.clear_screen()
+        self.print_logo()
+        print(f"\n{Colors.BOLD}{Colors.GREEN}=== PUBLICATION SEARCH ==={Colors.RESET}\n")
+
+        if not doctor_info:
+            doctor_info = self.get_doctor_info()
+
+        doctor_name = doctor_info["doctor_name"]
+
+        print(f"\n{Colors.CYAN}Searching publications for: {doctor_name}{Colors.RESET}\n")
+
+        urls = []
+        for platform, url_template in self.PUBLICATION_LOOKUP.items():
+            url = url_template.format(
+                doctor_name=urllib.parse.quote(doctor_name)
+            )
+            urls.append((platform, url))
+            print(f"{Colors.YELLOW}{platform:<20}{Colors.RESET} {url}")
+
+        self.search_results["publication_search"] = urls
+
+        print(f"\n{Colors.INFO}ℹ Publication databases show:{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Research papers and studies{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Citations and impact metrics{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Areas of medical expertise{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Academic contributions{Colors.RESET}")
+
+        if self.config.get("auto_open_browser", True):
+            open_choice = input(f"\n{Colors.WHITE}Open publication databases? (y/n): {Colors.RESET}").strip().lower()
+            if open_choice == 'y':
+                for platform, url in urls:
+                    try:
+                        webbrowser.open(url)
+                        self.print_success(f"Opened {platform}")
+                    except Exception as e:
+                        self.print_error(f"Could not open {platform}: {e}")
+
+        self.save_history({"type": "publication_search", **doctor_info, "urls": dict(urls)})
+
+        input(f"\n{Colors.CYAN}Press Enter to continue...{Colors.RESET}")
+
+    def specialty_verification(self, doctor_info: Optional[Dict] = None):
+        """Verify board certifications and specialties"""
+        self.clear_screen()
+        self.print_logo()
+        print(f"\n{Colors.BOLD}{Colors.GREEN}=== SPECIALTY BOARD VERIFICATION ==={Colors.RESET}\n")
+
+        if not doctor_info:
+            doctor_info = self.get_doctor_info()
+
+        doctor_name = doctor_info["doctor_name"]
+        specialty = doctor_info.get("specialty", "")
+
+        print(f"\n{Colors.CYAN}Verifying board certifications for: {doctor_name}{Colors.RESET}\n")
+
+        urls = []
+        for platform, url_template in self.SPECIALTY_VERIFICATION.items():
+            url = url_template
+            urls.append((platform, url))
+            print(f"{Colors.YELLOW}{platform:<30}{Colors.RESET} {url}")
+
+        self.search_results["specialty_verification"] = urls
+
+        print(f"\n{Colors.INFO}ℹ Board certification databases show:{Colors.RESET}")
+        print(f"  • {Colors.WHITE}ABMS board certifications (24+ specialties){Colors.RESET}")
+        print(f"  • {Colors.WHITE}AOA osteopathic certifications{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Certification status and expiration{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Subspecialty certifications{Colors.RESET}")
+
+        if specialty:
+            print(f"\n{Colors.CYAN}Note: Searching for specialty: {specialty}{Colors.RESET}")
+
+        if self.config.get("auto_open_browser", True):
+            open_choice = input(f"\n{Colors.WHITE}Open certification databases? (y/n): {Colors.RESET}").strip().lower()
+            if open_choice == 'y':
+                for platform, url in urls:
+                    try:
+                        webbrowser.open(url)
+                        self.print_success(f"Opened {platform}")
+                    except Exception as e:
+                        self.print_error(f"Could not open {platform}: {e}")
+
+        self.save_history({"type": "specialty_verification", **doctor_info, "urls": dict(urls)})
+
+        input(f"\n{Colors.CYAN}Press Enter to continue...{Colors.RESET}")
+
+    def education_training_lookup(self, doctor_info: Optional[Dict] = None):
+        """Look up education and training background"""
+        self.clear_screen()
+        self.print_logo()
+        print(f"\n{Colors.BOLD}{Colors.GREEN}=== EDUCATION & TRAINING LOOKUP ==={Colors.RESET}\n")
+
+        if not doctor_info:
+            doctor_info = self.get_doctor_info()
+
+        doctor_name = doctor_info["doctor_name"]
+
+        print(f"\n{Colors.CYAN}Looking up education & training for: {doctor_name}{Colors.RESET}\n")
+
+        urls = []
+        for platform, url_template in self.EDUCATION_LOOKUP.items():
+            url = url_template.format(
+                doctor_name=urllib.parse.quote(doctor_name)
+            )
+            urls.append((platform, url))
+            print(f"{Colors.YELLOW}{platform:<20}{Colors.RESET} {url}")
+
+        self.search_results["education_lookup"] = urls
+
+        print(f"\n{Colors.INFO}ℹ Education databases show:{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Medical school attended{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Residency and fellowship training{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Year of graduation{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Professional credentials{Colors.RESET}")
+
+        if self.config.get("auto_open_browser", True):
+            open_choice = input(f"\n{Colors.WHITE}Open education databases? (y/n): {Colors.RESET}").strip().lower()
+            if open_choice == 'y':
+                for platform, url in urls:
+                    try:
+                        webbrowser.open(url)
+                        self.print_success(f"Opened {platform}")
+                    except Exception as e:
+                        self.print_error(f"Could not open {platform}: {e}")
+
+        self.save_history({"type": "education_lookup", **doctor_info, "urls": dict(urls)})
+
+        input(f"\n{Colors.CYAN}Press Enter to continue...{Colors.RESET}")
+
+    def hospital_affiliations_lookup(self, doctor_info: Optional[Dict] = None):
+        """Look up hospital affiliations"""
+        self.clear_screen()
+        self.print_logo()
+        print(f"\n{Colors.BOLD}{Colors.GREEN}=== HOSPITAL AFFILIATIONS LOOKUP ==={Colors.RESET}\n")
+
+        if not doctor_info:
+            doctor_info = self.get_doctor_info()
+
+        doctor_name = doctor_info["doctor_name"]
+        city = doctor_info["city"]
+        state = doctor_info["state"]
+
+        print(f"\n{Colors.CYAN}Looking up hospital affiliations for: {doctor_name}{Colors.RESET}\n")
+
+        urls = []
+        for platform, url_template in self.HOSPITAL_AFFILIATIONS.items():
+            url = url_template.format(
+                doctor_name=urllib.parse.quote(doctor_name),
+                city=urllib.parse.quote(city),
+                state=urllib.parse.quote(state)
+            )
+            urls.append((platform, url))
+            print(f"{Colors.YELLOW}{platform:<35}{Colors.RESET} {url}")
+
+        self.search_results["hospital_affiliations"] = urls
+
+        print(f"\n{Colors.INFO}ℹ Hospital affiliation data shows:{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Primary hospital affiliations{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Admitting privileges{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Practice locations{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Hospital quality ratings{Colors.RESET}")
+
+        if self.config.get("auto_open_browser", True):
+            open_choice = input(f"\n{Colors.WHITE}Open hospital affiliation sites? (y/n): {Colors.RESET}").strip().lower()
+            if open_choice == 'y':
+                for platform, url in urls:
+                    try:
+                        webbrowser.open(url)
+                        self.print_success(f"Opened {platform}")
+                    except Exception as e:
+                        self.print_error(f"Could not open {platform}: {e}")
+
+        self.save_history({"type": "hospital_affiliations", **doctor_info, "urls": dict(urls)})
+
+        input(f"\n{Colors.CYAN}Press Enter to continue...{Colors.RESET}")
+
+    def insurance_acceptance_lookup(self, doctor_info: Optional[Dict] = None):
+        """Look up accepted insurance providers"""
+        self.clear_screen()
+        self.print_logo()
+        print(f"\n{Colors.BOLD}{Colors.GREEN}=== INSURANCE ACCEPTANCE LOOKUP ==={Colors.RESET}\n")
+
+        if not doctor_info:
+            doctor_info = self.get_doctor_info()
+
+        doctor_name = doctor_info["doctor_name"]
+        city = doctor_info["city"]
+        state = doctor_info["state"]
+
+        print(f"\n{Colors.CYAN}Checking insurance acceptance for: {doctor_name}{Colors.RESET}\n")
+
+        urls = []
+        for platform, url_template in self.INSURANCE_ACCEPTANCE.items():
+            url = url_template.format(
+                doctor_name=urllib.parse.quote(doctor_name),
+                city=urllib.parse.quote(city),
+                state=urllib.parse.quote(state)
+            )
+            urls.append((platform, url))
+            print(f"{Colors.YELLOW}{platform:<30}{Colors.RESET} {url}")
+
+        self.search_results["insurance_acceptance"] = urls
+
+        print(f"\n{Colors.INFO}ℹ Insurance information shows:{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Accepted insurance plans{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Medicare/Medicaid participation{Colors.RESET}")
+        print(f"  • {Colors.WHITE}In-network vs out-of-network{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Payment policies{Colors.RESET}")
+
+        if self.config.get("auto_open_browser", True):
+            open_choice = input(f"\n{Colors.WHITE}Open insurance lookup sites? (y/n): {Colors.RESET}").strip().lower()
+            if open_choice == 'y':
+                for platform, url in urls:
+                    try:
+                        webbrowser.open(url)
+                        self.print_success(f"Opened {platform}")
+                    except Exception as e:
+                        self.print_error(f"Could not open {platform}: {e}")
+
+        self.save_history({"type": "insurance_acceptance", **doctor_info, "urls": dict(urls)})
+
+        input(f"\n{Colors.CYAN}Press Enter to continue...{Colors.RESET}")
+
+    def language_support_lookup(self, doctor_info: Optional[Dict] = None):
+        """Look up languages spoken by doctor"""
+        self.clear_screen()
+        self.print_logo()
+        print(f"\n{Colors.BOLD}{Colors.GREEN}=== LANGUAGE SUPPORT LOOKUP ==={Colors.RESET}\n")
+
+        if not doctor_info:
+            doctor_info = self.get_doctor_info()
+
+        doctor_name = doctor_info["doctor_name"]
+        city = doctor_info["city"]
+        state = doctor_info["state"]
+
+        print(f"\n{Colors.CYAN}Looking up languages spoken by: {doctor_name}{Colors.RESET}\n")
+
+        urls = []
+        for platform, url_template in self.LANGUAGE_SUPPORT.items():
+            url = url_template.format(
+                doctor_name=urllib.parse.quote(doctor_name),
+                city=urllib.parse.quote(city),
+                state=urllib.parse.quote(state)
+            )
+            urls.append((platform, url))
+            print(f"{Colors.YELLOW}{platform:<30}{Colors.RESET} {url}")
+
+        self.search_results["language_support"] = urls
+
+        print(f"\n{Colors.INFO}ℹ Language information shows:{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Languages spoken by doctor{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Interpreter services available{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Multilingual office staff{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Translation services{Colors.RESET}")
+
+        if self.config.get("auto_open_browser", True):
+            open_choice = input(f"\n{Colors.WHITE}Open language lookup sites? (y/n): {Colors.RESET}").strip().lower()
+            if open_choice == 'y':
+                for platform, url in urls:
+                    try:
+                        webbrowser.open(url)
+                        self.print_success(f"Opened {platform}")
+                    except Exception as e:
+                        self.print_error(f"Could not open {platform}: {e}")
+
+        self.save_history({"type": "language_support", **doctor_info, "urls": dict(urls)})
+
+        input(f"\n{Colors.CYAN}Press Enter to continue...{Colors.RESET}")
+
+    def telemedicine_options_lookup(self, doctor_info: Optional[Dict] = None):
+        """Look up telemedicine/virtual visit options"""
+        self.clear_screen()
+        self.print_logo()
+        print(f"\n{Colors.BOLD}{Colors.GREEN}=== TELEMEDICINE OPTIONS LOOKUP ==={Colors.RESET}\n")
+
+        if not doctor_info:
+            doctor_info = self.get_doctor_info()
+
+        doctor_name = doctor_info["doctor_name"]
+        city = doctor_info["city"]
+        state = doctor_info["state"]
+
+        print(f"\n{Colors.CYAN}Checking telemedicine options for: {doctor_name}{Colors.RESET}\n")
+
+        urls = []
+        for platform, url_template in self.TELEMEDICINE_OPTIONS.items():
+            url = url_template.format(
+                doctor_name=urllib.parse.quote(doctor_name),
+                city=urllib.parse.quote(city),
+                state=urllib.parse.quote(state)
+            )
+            urls.append((platform, url))
+            print(f"{Colors.YELLOW}{platform:<30}{Colors.RESET} {url}")
+
+        self.search_results["telemedicine_options"] = urls
+
+        print(f"\n{Colors.INFO}ℹ Telemedicine platforms show:{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Virtual visit availability{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Video consultation platforms{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Online prescription services{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Remote patient monitoring{Colors.RESET}")
+
+        if self.config.get("auto_open_browser", True):
+            open_choice = input(f"\n{Colors.WHITE}Open telemedicine sites? (y/n): {Colors.RESET}").strip().lower()
+            if open_choice == 'y':
+                for platform, url in urls:
+                    try:
+                        webbrowser.open(url)
+                        self.print_success(f"Opened {platform}")
+                    except Exception as e:
+                        self.print_error(f"Could not open {platform}: {e}")
+
+        self.save_history({"type": "telemedicine_options", **doctor_info, "urls": dict(urls)})
+
+        input(f"\n{Colors.CYAN}Press Enter to continue...{Colors.RESET}")
+
+    def appointment_booking_links(self, doctor_info: Optional[Dict] = None):
+        """Get appointment booking links"""
+        self.clear_screen()
+        self.print_logo()
+        print(f"\n{Colors.BOLD}{Colors.GREEN}=== APPOINTMENT BOOKING LINKS ==={Colors.RESET}\n")
+
+        if not doctor_info:
+            doctor_info = self.get_doctor_info()
+
+        doctor_name = doctor_info["doctor_name"]
+        city = doctor_info["city"]
+        state = doctor_info["state"]
+
+        print(f"\n{Colors.CYAN}Finding appointment booking options for: {doctor_name}{Colors.RESET}\n")
+
+        urls = []
+        for platform, url_template in self.APPOINTMENT_BOOKING.items():
+            url = url_template.format(
+                doctor_name=urllib.parse.quote(doctor_name),
+                city=urllib.parse.quote(city),
+                state=urllib.parse.quote(state)
+            )
+            urls.append((platform, url))
+            print(f"{Colors.YELLOW}{platform:<30}{Colors.RESET} {url}")
+
+        self.search_results["appointment_booking"] = urls
+
+        print(f"\n{Colors.INFO}ℹ Booking platforms provide:{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Online appointment scheduling{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Patient portal access{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Same-day appointment availability{Colors.RESET}")
+        print(f"  • {Colors.WHITE}Waitlist notifications{Colors.RESET}")
+
+        print(f"\n{Colors.YELLOW}Note: Real-time availability varies by practice.{Colors.RESET}")
+
+        if self.config.get("auto_open_browser", True):
+            open_choice = input(f"\n{Colors.WHITE}Open booking sites? (y/n): {Colors.RESET}").strip().lower()
+            if open_choice == 'y':
+                for platform, url in urls:
+                    try:
+                        webbrowser.open(url)
+                        self.print_success(f"Opened {platform}")
+                    except Exception as e:
+                        self.print_error(f"Could not open {platform}: {e}")
+
+        self.save_history({"type": "appointment_booking", **doctor_info, "urls": dict(urls)})
+
+        input(f"\n{Colors.CYAN}Press Enter to continue...{Colors.RESET}")
+
     def comprehensive_search(self):
         """Run all search features at once"""
         self.clear_screen()
@@ -454,19 +935,46 @@ class DoctorDork:
         self.config["auto_open_browser"] = False
 
         # Run all searches
-        self.print_info("1/5 - Running contact search...")
+        self.print_info("1/14 - Running contact search...")
         self.contact_search(doctor_info)
 
-        self.print_info("2/5 - Looking up medical board...")
+        self.print_info("2/14 - Looking up medical board...")
         self.medical_board_lookup(doctor_info)
 
-        self.print_info("3/5 - Aggregating reviews...")
+        self.print_info("3/14 - Checking Medicare participation...")
+        self.medicare_participation_lookup(doctor_info)
+
+        self.print_info("4/14 - Searching publications...")
+        self.publication_search(doctor_info)
+
+        self.print_info("5/14 - Verifying specialty certifications...")
+        self.specialty_verification(doctor_info)
+
+        self.print_info("6/14 - Looking up education & training...")
+        self.education_training_lookup(doctor_info)
+
+        self.print_info("7/14 - Checking hospital affiliations...")
+        self.hospital_affiliations_lookup(doctor_info)
+
+        self.print_info("8/14 - Looking up insurance acceptance...")
+        self.insurance_acceptance_lookup(doctor_info)
+
+        self.print_info("9/14 - Checking language support...")
+        self.language_support_lookup(doctor_info)
+
+        self.print_info("10/14 - Finding telemedicine options...")
+        self.telemedicine_options_lookup(doctor_info)
+
+        self.print_info("11/14 - Getting appointment booking links...")
+        self.appointment_booking_links(doctor_info)
+
+        self.print_info("12/14 - Aggregating reviews...")
         self.review_aggregation(doctor_info)
 
-        self.print_info("4/5 - Searching social media...")
+        self.print_info("13/14 - Searching social media...")
         self.social_media_search(doctor_info)
 
-        self.print_info("5/5 - Complete!")
+        self.print_info("14/14 - Complete!")
 
         # Restore original setting
         self.config["auto_open_browser"] = original_setting
